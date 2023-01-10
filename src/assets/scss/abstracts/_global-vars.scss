@@ -1,0 +1,27 @@
+//
+// FONT FAMILIES
+//
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
+
+@font-face {
+    font-family: "LGF";
+    src: url("assets/fonts/Louis-George-Cafe.ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "LGF";
+    src: url("assets/fonts/Louis-George-Cafe-Bold.ttf");
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: "LGF";
+    src: url("assets/fonts/Louis-George-Cafe-Light.ttf");
+    font-weight: 200;
+}
+
+// Fonts
+// -------------------------
+
+$font-1: 'Lato';
