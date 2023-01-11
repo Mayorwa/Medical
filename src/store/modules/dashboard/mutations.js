@@ -12,32 +12,32 @@ export default {
   },
 
   [types.PATIENTS_LOADING](state, payload) {
-    state.medicalOfficersLoading = payload
+    state.patientsLoading = payload
   },
   [types.PATIENTS_FAILURE](state, payload) {
-    state.medicalOfficersFailure = payload
+    state.patientsFailure = payload
   },
   [types.PATIENTS_INFO](state, payload) {
-    state.medicalOfficersData = payload
+    state.patientsData = payload
   },
 
   [types.ROLES_LOADING](state, payload) {
-    state.medicalOfficersLoading = payload
+    state.rolesLoading = payload
   },
   [types.ROLES_FAILURE](state, payload) {
-    state.medicalOfficersFailure = payload
+    state.rolesFailure = payload
   },
   [types.ROLES_INFO](state, payload) {
-    state.medicalOfficersData = payload
+    state.rolesData = payload
   },
 
   [types.RECORDS_LOADING](state, payload) {
-    state.medicalOfficersLoading = payload
+    state.recordsLoading = payload
   },
   [types.RECORDS_FAILURE](state, payload) {
-    state.medicalOfficersFailure = payload
+    state.recordsFailure = payload
   },
   [types.RECORDS_INFO](state, payload) {
-    state.medicalOfficersData = payload
+    state.recordsData = payload
   },
 }

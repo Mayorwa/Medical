@@ -3,17 +3,16 @@
   <div v-else class="page__container">
     <div class="prices">
       <div class="prices__head">
-        <div class="sm:grid prices__title h6">Medical Officers</div>
+        <h4 class="prices__title">Medical Officers</h4>
         <Button
           :loading="loading"
           :variant="'primary'"
           :size="'md'"
           type="submit"
-          btnClass="w-full"
           name="requestDemo"
-          @click="''"
+          @click="triggerModal(true)"
         >
-          <span class="my-2 ml-0">Create</span></Button
+          <span class="ml-0">Create</span></Button
         >
       </div>
       <div class="prices_description">records of medical officers</div>
@@ -60,6 +59,7 @@
         </div>
       </div>
     </div>
+    <MedicalOfficerModal :show-modal="showModal" @triggerModal="triggerModal" />
   </div>
 </template>
 <script>
@@ -68,23 +68,27 @@ const moment = require('moment')
 import Loader from '@/components/ui/Loaders/Loader'
 import { mapGetters } from 'vuex'
 import Button from '@/components/ui/Button'
+import MedicalOfficerModal from '@/components/MedicalOfficerModal'
+
 export default {
-  name: 'services',
-  components: { Loader, Button },
+  name: 'Medical Officers',
+  components: { Loader, Button, MedicalOfficerModal },
   data() {
     return {
       numeral: numeral,
       moment: moment,
       loading: false,
       showModal: false,
-      deleteModal: false,
-      selectedItem: {},
-      deleteItem: 0,
       medicalOfficers: [],
     }
   },
   mounted() {
     this.$store.dispatch('handleGetAllMedicalOfficers')
+  },
+  methods: {
+    triggerModal(value) {
+      this.showModal = value
+    },
   },
   computed: {
     ...mapGetters(['getMedicalOfficersData', 'getMedicalOfficersLoading']),

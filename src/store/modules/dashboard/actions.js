@@ -37,45 +37,45 @@ export default {
       })
   },
   handleGetAllPatients({ commit }) {
-    commit(types.MEDICAL_OFFICERS_LOADING, true)
-    commit(types.MEDICAL_OFFICERS_FAILURE, '')
+    commit(types.PATIENTS_LOADING, true)
+    commit(types.PATIENTS_FAILURE, '')
     getAllPatients()
       .then(response => {
-        commit(types.MEDICAL_OFFICERS_INFO, response.data.data)
-        commit(types.MEDICAL_OFFICERS_LOADING, false)
+        commit(types.PATIENTS_INFO, response.data.data)
+        commit(types.PATIENTS_LOADING, false)
       })
       .catch(error => {
         const { data } = error.response
-        commit(types.MEDICAL_OFFICERS_FAILURE, data)
-        commit(types.MEDICAL_OFFICERS_LOADING, false)
+        commit(types.PATIENTS_FAILURE, data)
+        commit(types.PATIENTS_LOADING, false)
       })
   },
   handleGetAllRecords({ commit }) {
-    commit(types.MEDICAL_OFFICERS_LOADING, true)
-    commit(types.MEDICAL_OFFICERS_FAILURE, '')
+    commit(types.RECORDS_LOADING, true)
+    commit(types.RECORDS_FAILURE, '')
     getAllRecords()
       .then(response => {
-        commit(types.MEDICAL_OFFICERS_INFO, response.data.data)
-        commit(types.MEDICAL_OFFICERS_LOADING, false)
+        commit(types.RECORDS_INFO, response.data.data)
+        commit(types.RECORDS_LOADING, false)
       })
       .catch(error => {
         const { data } = error.response
-        commit(types.MEDICAL_OFFICERS_FAILURE, data)
-        commit(types.MEDICAL_OFFICERS_LOADING, false)
+        commit(types.RECORDS_FAILURE, data)
+        commit(types.RECORDS_LOADING, false)
       })
   },
   handleGetAllRoles({ commit }) {
-    commit(types.MEDICAL_OFFICERS_LOADING, true)
-    commit(types.MEDICAL_OFFICERS_FAILURE, '')
+    commit(types.ROLES_LOADING, true)
+    commit(types.ROLES_FAILURE, '')
     getAllRole()
       .then(response => {
-        commit(types.MEDICAL_OFFICERS_INFO, response.data.data)
-        commit(types.MEDICAL_OFFICERS_LOADING, false)
+        commit(types.ROLES_INFO, response.data.data)
+        commit(types.ROLES_LOADING, false)
       })
       .catch(error => {
         const { data } = error.response
-        commit(types.MEDICAL_OFFICERS_FAILURE, data)
-        commit(types.MEDICAL_OFFICERS_LOADING, false)
+        commit(types.ROLES_FAILURE, data)
+        commit(types.ROLES_LOADING, false)
       })
   },
 }

@@ -106,21 +106,6 @@
 .field__label{
   margin-bottom: 5px;
 }
-.field__input{
-  height: 56px;
-  width: 100%;
-  padding: 0 20px;
-  border-radius: 8px;
-  background: transparent;
-  font-size: 14px;
-  font-weight: 600;
-  color: #11142d;
-  border: 2px solid hsla(0,0%,89.4%,.5);
-  transition: all .5s;
-  &:focus{
-    border-color: #355DFF;
-  }
-}
 .login__links:not(:last-child) {
   margin-bottom: 30px;
   text-align: right;

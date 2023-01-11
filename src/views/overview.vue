@@ -2,7 +2,7 @@
   <div class="page__container">
     <div class="prices">
       <div class="prices__head">
-        <div class="prices__title h6">Overview</div>
+        <h4 class="prices__title">Overview</h4>
       </div>
       <div class="prices_description">
         statistics of records in the medical application
