@@ -74,7 +74,7 @@ import PatientsModal from '@/components/PatientsModal'
 
 const moment = require('moment')
 export default {
-  name: 'patients',
+  name: 'DashboardPatients',
   components: { Loader, Button, PatientsModal },
   data() {
     return {

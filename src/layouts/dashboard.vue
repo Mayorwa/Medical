@@ -13,7 +13,7 @@
 import Header from '@/components/header.vue'
 import Sidebar from '@/components/sidebar.vue'
 export default {
-  name: 'Home',
+  name: 'DashboardHome',
   components: {
     Header,
     Sidebar,

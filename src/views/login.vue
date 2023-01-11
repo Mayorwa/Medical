@@ -61,7 +61,7 @@
 <script>
 import Button from '@/components/ui/Button'
 export default {
-  name: 'Login',
+  name: 'AuthLogin',
   components: { Button },
   data() {
     return {

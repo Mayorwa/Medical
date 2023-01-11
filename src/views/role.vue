@@ -61,7 +61,7 @@ import RolesModal from '@/components/RolesModal'
 
 const moment = require('moment')
 export default {
-  name: 'role',
+  name: 'DashboardRole',
   components: { Loader, Button, RolesModal },
   data() {
     return {

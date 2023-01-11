@@ -89,7 +89,7 @@ import RecordsModal from '@/components/RecordsModal'
 const numeral = require('numeral')
 const moment = require('moment')
 export default {
-  name: 'Record',
+  name: 'DashboardRecord',
   components: { Loader, Button, RecordsModal },
   data() {
     return {

@@ -109,6 +109,7 @@
 import $ from 'jquery'
 
 export default {
+  name: 'DashboardSidebar',
   data() {
     return {
       routeName: '',

@@ -71,7 +71,7 @@ import Button from '@/components/ui/Button'
 import MedicalOfficerModal from '@/components/MedicalOfficerModal'
 
 export default {
-  name: 'Medical Officers',
+  name: 'MedicalOfficers',
   components: { Loader, Button, MedicalOfficerModal },
   data() {
     return {

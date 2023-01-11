@@ -59,7 +59,7 @@
 </template>
 <script>
 export default {
-  name: 'overview',
+  name: 'DashboardOverview',
   data() {
     return {
       statistics: [
