@@ -3,12 +3,12 @@ import {
   get_logged_in_user,
   login,
 } from '../../../services/authentication/index'
-import { getAllOfficers } from '@/services/medical-officer'
+import { createOfficer, getAllOfficers } from '@/services/medical-officer'
 import { formatError } from '../../helpers/error-helper'
 import { Authorization } from '/utils/authorization'
-import { getAllPatients } from '@/services/patient'
-import { getAllRecords } from '@/services/record'
-import { getAllRole } from '@/services/role'
+import { createPatient, getAllPatients } from '@/services/patient'
+import { createRecord, getAllRecords } from '@/services/record'
+import { createRole, getAllRole } from '@/services/role'
 
 export default {
   // eslint-disable-next-line no-unused-vars
@@ -89,6 +89,57 @@ export default {
         commit(types.USER_FAILURE, formatError(error))
         commit(types.USER_LOADING, false)
       })
+  },
+  // eslint-disable-next-line no-unused-vars
+  handleCreateMedicalOfficer({ commit }, createData) {
+    return new Promise((resolve, reject) => {
+      createOfficer(createData)
+        .then(response => {
+          resolve(response.data)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  },
+
+  // eslint-disable-next-line no-unused-vars
+  handleCreateRole({ commit }, createData) {
+    return new Promise((resolve, reject) => {
+      createRole(createData)
+        .then(response => {
+          resolve(response.data)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  },
+
+  // eslint-disable-next-line no-unused-vars
+  handleCreatePatient({ commit }, createData) {
+    return new Promise((resolve, reject) => {
+      createPatient(createData)
+        .then(response => {
+          resolve(response.data)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  },
+
+  // eslint-disable-next-line no-unused-vars
+  handleCreateRecord({ commit }, createData) {
+    return new Promise((resolve, reject) => {
+      createRecord(createData)
+        .then(response => {
+          resolve(response.data)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
   },
 }
 

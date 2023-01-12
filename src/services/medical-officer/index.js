@@ -1,7 +1,7 @@
 import http from '../../config/axios'
 
 export const medicalOfficerUrls = {
-  CREATE_URL: 'Authentication/login',
+  CREATE_URL: 'Medicalofficers/create',
   GET_ALL_URL: 'Medicalofficers/get-all',
   GET_BY_ID_URL: 'Authentication/login',
   GET_ALL_RECORDS_URL: 'Authentication/login',

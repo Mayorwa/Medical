@@ -16,7 +16,7 @@
               id="name"
               type="text"
               placeholder="'e.g James Agbabiaka'"
-              v-model="name"
+              v-model="createRecordData.name"
             />
           </div>
           <div>
@@ -25,7 +25,7 @@
               id="name"
               type="text"
               placeholder="'e.g 1000-2233-2332'"
-              v-model="name"
+              v-model="createRecordData.patientId"
             />
           </div>
         </div>
@@ -36,7 +36,7 @@
               id="name"
               type="date"
               placeholder="'e.g john@gmail.com'"
-              v-model="email"
+              v-model="createRecordData.nextAppointment"
             />
           </div>
           <div>
@@ -45,7 +45,7 @@
               id="name"
               type="password"
               placeholder="'e.g *******'"
-              v-model="password"
+              v-model="createRecordData.password"
             />
           </div>
         </div>
@@ -56,16 +56,7 @@
               id="name"
               type="text"
               placeholder="'e.g Titans Cup'"
-              v-model="name"
-            />
-          </div>
-          <div>
-            <label for="name" class="mb-2">Role</label>
-            <TextInput
-              id="name"
-              type="text"
-              placeholder="'e.g Titans Cup'"
-              v-model="name"
+              v-model="createRecordData.remark"
             />
           </div>
         </div>
@@ -73,10 +64,11 @@
           <Button
             :loading="loading"
             :variant="'primary'"
+            :disabled="!allFilled"
             :size="'md'"
             type="submit"
             name="requestDemo"
-            @click="''"
+            @click="createRecord"
           >
             <span class="ml-0">Create</span></Button
           >
@@ -86,7 +78,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 import Modal from '@/components/ui/Modal'
 import TextInput from '@/components/ui/Inputs/TextInput'
 import Button from '@/components/ui/Button'
@@ -98,11 +90,45 @@ export default defineComponent({
       required: true,
     },
   },
-  components: { Modal, TextInput, Button },
-  setup() {
-    const loading = ref(false)
-    return { loading }
+  data() {
+    return {
+      loading: false,
+      createRecordData: {
+        name: '',
+        description: '',
+        patientId: '',
+        nextAppointment: '',
+        remark: '',
+      },
+    }
   },
+  methods: {
+    createRecord() {
+      this.loading = true
+      this.$store
+        .dispatch('handleCreateRecord', this.createRecordData)
+        .then(() => {
+          this.loading = false
+        })
+        .catch(() => {
+          this.loading = false
+        })
+    },
+  },
+  computed: {
+    allFilled() {
+      const { name, description, patientId, nextAppointment, remark } =
+        this.createRecordData
+      return (
+        name !== '' &&
+        description !== '' &&
+        patientId !== '' &&
+        nextAppointment !== '' &&
+        remark !== ''
+      )
+    },
+  },
+  components: { Modal, TextInput, Button },
 })
 </script>
 <style lang="scss" scoped>

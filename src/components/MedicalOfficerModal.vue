@@ -118,6 +118,10 @@ export default defineComponent({
         phoneNumber: '',
         password: '',
         roles: [],
+        ShowIcon: true,
+        showNotification: false,
+        NotificationMessage: '',
+        NotificationType: null,
       },
     }
   },
@@ -125,6 +129,25 @@ export default defineComponent({
     this.$store.dispatch('handleGetAllRoles')
   },
   methods: {
+    removeNotificationAfterFewSeconds() {
+      setTimeout(() => {
+        this.showNotification = false
+        this.NotificationMessage = ''
+        this.NotificationType = null
+      }, 3500)
+    },
+    activateNotification(
+      notificationType,
+      notificationMessage,
+      showNotification,
+      showIcon
+    ) {
+      this.NotificationType = notificationType
+      this.NotificationMessage = notificationMessage
+      this.showNotification = showNotification
+      this.ShowIcon = showIcon
+      this.removeNotificationAfterFewSeconds()
+    },
     createOfficer() {
       this.loading = true
       this.$store
