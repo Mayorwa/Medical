@@ -100,13 +100,14 @@
             </g>
           </svg>
         </div>
-        <div class="sidebar__text">made by Dr Azeez</div>
+        <div class="sidebar__text">{{ user.name }}({{ user.userType }})</div>
       </a>
     </div>
   </div>
 </template>
 <script>
 import $ from 'jquery'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'DashboardSidebar',
@@ -130,8 +131,11 @@ export default {
     getRouteName() {
       return this.$route.name
     },
+    ...mapGetters({ user: 'getUserData' }),
   },
+
   mounted() {
+    this.$store.dispatch('handleGetLoggedInUser')
     let toggle = $('.sidebar__toggle'),
       page = $('.page'),
       sidebar = $('.sidebar'),

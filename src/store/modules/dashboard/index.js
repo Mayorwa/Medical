@@ -14,6 +14,10 @@ export default {
     recordsLoading: false,
     recordsFailure: null,
 
+    userData: [],
+    userLoading: false,
+    userFailure: null,
+
     rolesData: [],
     rolesLoading: false,
     rolesFailure: null,
@@ -21,6 +25,10 @@ export default {
   actions: { ...authActions },
   mutations: { ...authMutations },
   getters: {
+    getUserLoading: state => state.userLoading,
+    getUserData: state => state.userData,
+    getUserFailure: state => state.userFailure,
+
     getMedicalOfficersLoading: state => state.medicalOfficersLoading,
     getMedicalOfficersData: state => state.medicalOfficersData,
     getMedicalOfficersFailure: state => state.medicalOfficersFailure,

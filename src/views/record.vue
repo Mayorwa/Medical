@@ -114,7 +114,7 @@ export default {
   watch: {
     getRecordsData: {
       handler(value) {
-        this.records = value.pagedList
+        this.records = value
       },
     },
   },

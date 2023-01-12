@@ -1,7 +1,10 @@
 import * as types from './types'
-import { login } from '../../../services/authentication/index'
+import {
+  get_logged_in_user,
+  login,
+} from '../../../services/authentication/index'
 import { getAllOfficers } from '@/services/medical-officer'
-// import { formatError } from '../../helpers/error-helper'
+import { formatError } from '../../helpers/error-helper'
 import { Authorization } from '/utils/authorization'
 import { getAllPatients } from '@/services/patient'
 import { getAllRecords } from '@/services/record'
@@ -31,8 +34,7 @@ export default {
         commit(types.MEDICAL_OFFICERS_LOADING, false)
       })
       .catch(error => {
-        const { data } = error.response
-        commit(types.MEDICAL_OFFICERS_FAILURE, data)
+        commit(types.MEDICAL_OFFICERS_FAILURE, formatError(error))
         commit(types.MEDICAL_OFFICERS_LOADING, false)
       })
   },
@@ -45,8 +47,7 @@ export default {
         commit(types.PATIENTS_LOADING, false)
       })
       .catch(error => {
-        const { data } = error.response
-        commit(types.PATIENTS_FAILURE, data)
+        commit(types.PATIENTS_FAILURE, formatError(error))
         commit(types.PATIENTS_LOADING, false)
       })
   },
@@ -59,8 +60,7 @@ export default {
         commit(types.RECORDS_LOADING, false)
       })
       .catch(error => {
-        const { data } = error.response
-        commit(types.RECORDS_FAILURE, data)
+        commit(types.RECORDS_FAILURE, formatError(error))
         commit(types.RECORDS_LOADING, false)
       })
   },
@@ -73,9 +73,21 @@ export default {
         commit(types.ROLES_LOADING, false)
       })
       .catch(error => {
-        const { data } = error.response
-        commit(types.ROLES_FAILURE, data)
+        commit(types.ROLES_FAILURE, formatError(error))
         commit(types.ROLES_LOADING, false)
+      })
+  },
+  handleGetLoggedInUser({ commit }) {
+    commit(types.USER_LOADING, true)
+    commit(types.USER_FAILURE, '')
+    get_logged_in_user()
+      .then(response => {
+        commit(types.USER_INFO, response.data.data)
+        commit(types.USER_LOADING, false)
+      })
+      .catch(error => {
+        commit(types.USER_FAILURE, formatError(error))
+        commit(types.USER_LOADING, false)
       })
   },
 }

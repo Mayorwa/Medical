@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import AuthGuard from '@/router/auth-guard'
 
 const routes = [
   {
@@ -9,6 +10,7 @@ const routes = [
   {
     path: '',
     name: 'dashboardContainer',
+    beforeEnter: AuthGuard,
     component: () => import('@/layouts/dashboard.vue'),
     redirect: { name: 'overview' },
     children: [

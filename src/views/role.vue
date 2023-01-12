@@ -22,30 +22,12 @@
           <div class="prices__row prices__row_head">
             <div class="prices__cell">#</div>
             <div class="prices__cell">name</div>
-            <div class="prices__cell">email</div>
-            <div class="prices__cell">office</div>
-            <div class="prices__cell">job title</div>
-            <div class="prices__cell">creation date</div>
-            <div class="prices__cell">actions</div>
           </div>
           <div v-for="(role, index) in roles" class="prices__row" :key="index">
             <div class="prices__cell">
-              <a class="primary">{{ role.id }}</a>
+              <a class="primary">{{ index + 1 }}</a>
             </div>
             <div class="prices__cell">{{ role.name }}</div>
-            <div class="prices__cell">{{ role.email }}</div>
-            <div class="prices__cell">{{ role.office }}</div>
-            <div class="prices__cell">{{ role.job_title }}</div>
-            <div class="prices__cell">
-              {{
-                moment(String(role.created_at)).format(
-                  'MMMM Do YYYY, h:mm:ss a'
-                )
-              }}
-            </div>
-            <div class="prices__cell prices__btns">
-              <a class="button button--blue-white">view details</a>
-            </div>
           </div>
         </div>
       </div>
@@ -85,7 +67,7 @@ export default {
   watch: {
     getRolesData: {
       handler(value) {
-        this.roles = value.pagedList
+        this.roles = value
       },
     },
   },

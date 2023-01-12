@@ -40,4 +40,14 @@ export default {
   [types.RECORDS_INFO](state, payload) {
     state.recordsData = payload
   },
+
+  [types.USER_LOADING](state, payload) {
+    state.recordsLoading = payload
+  },
+  [types.USER_FAILURE](state, payload) {
+    state.recordsFailure = payload
+  },
+  [types.USER_INFO](state, payload) {
+    state.recordsData = payload
+  },
 }

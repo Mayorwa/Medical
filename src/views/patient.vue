@@ -21,13 +21,11 @@
         <div class="prices__table">
           <div class="prices__row prices__row_head">
             <div class="prices__cell">#</div>
-            <div class="prices__cell">phone</div>
-            <div class="prices__cell">address</div>
-            <div class="prices__cell">city</div>
-            <div class="prices__cell">state</div>
-            <div class="prices__cell">country</div>
-            <div class="prices__cell">date purchased</div>
-            <div class="prices__cell">actions</div>
+            <div class="prices__cell">name</div>
+            <div class="prices__cell">email</div>
+            <div class="prices__cell">Type</div>
+            <div class="prices__cell">date created</div>
+            <!--            <div class="prices__cell">actions</div>-->
           </div>
           <template v-if="patients.length">
             <div
@@ -36,25 +34,30 @@
               :key="index"
             >
               <div class="prices__cell">
-                <a class="primary">{{ patient.id }}</a>
+                <a class="primary">{{ index + 1 }}</a>
               </div>
-              <div class="prices__cell">{{ patient.phone }}</div>
-              <div class="prices__cell prices__description">
-                <p>{{ patient.address }}</p>
-              </div>
-              <div class="prices__cell">{{ patient.city }}</div>
-              <div class="prices__cell">{{ patient.state }}</div>
-              <div class="prices__cell">{{ patient.country }}</div>
+              <div class="prices__cell">{{ patient.name }}</div>
+              <div class="prices__cell">{{ patient.email }}</div>
+              <div class="prices__cell">{{ patient.userType }}</div>
               <div class="prices__cell">
                 {{
-                  moment(String(patient.created_at)).format(
+                  moment(String(patient.dateCreated)).format(
                     'MMMM Do YYYY, h:mm:ss a'
                   )
                 }}
               </div>
-              <div class="prices__cell prices__btns">
-                <a class="button button--blue-white">view details</a>
-              </div>
+              <!--                            <div class="prices__cell prices__btns">
+                              <Button
+                                :loading="false"
+                                :variant="'primary'"
+                                :size="'md'"
+                                type="submit"
+                                name="requestDemo"
+                                @click="''"
+                              >
+                                <span class="ml-0">View Details</span></Button
+                              >
+                            </div>-->
             </div>
           </template>
           <template v-else>
@@ -98,7 +101,7 @@ export default {
   watch: {
     getPatientsData: {
       handler(value) {
-        this.patients = value.pagedList
+        this.patients = value
       },
     },
   },

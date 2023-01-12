@@ -16,7 +16,7 @@
               id="name"
               type="text"
               placeholder="'e.g Titans Cup'"
-              v-model="name"
+              v-model="createPatientData.name"
             />
           </div>
           <div>
@@ -25,7 +25,7 @@
               id="name"
               type="text"
               placeholder="'e.g Titans Cup'"
-              v-model="name"
+              v-model="createPatientData.phoneNumber"
             />
           </div>
         </div>
@@ -36,7 +36,7 @@
               id="name"
               type="email"
               placeholder="'e.g john@gmail.com'"
-              v-model="email"
+              v-model="createPatientData.email"
             />
           </div>
           <div>
@@ -45,38 +45,46 @@
               id="name"
               type="password"
               placeholder="'e.g *******'"
-              v-model="password"
+              v-model="createPatientData.password"
             />
           </div>
         </div>
-        <div class="sm:grid sm:grid-cols-2 gap-4 mb-4">
-          <div>
-            <label for="name" class="mb-2">Type</label>
-            <TextInput
-              id="name"
-              type="text"
-              placeholder="'e.g Titans Cup'"
-              v-model="name"
-            />
-          </div>
+        <div class="mb-4">
           <div>
             <label for="name" class="mb-2">Role</label>
-            <TextInput
-              id="name"
-              type="text"
-              placeholder="'e.g Titans Cup'"
-              v-model="name"
-            />
+            <div class="flex flex-wrap">
+              <div
+                v-for="(role, index) in roles"
+                class="flex mr-4"
+                :key="index"
+              >
+                <label for="" class="mr-2">{{ role.name }}</label>
+                <div>
+                  <input
+                    class="field__checkbox"
+                    type="checkbox"
+                    :id="`checkbox1${index}`"
+                    name="lesson"
+                    :value="role.name"
+                    v-model="createPatientData.roles"
+                    autocomplete="off"
+                    required
+                  />
+                  <label :for="`checkbox1${index}`"><span></span></label>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="w-fit ml-auto">
           <Button
             :loading="loading"
             :variant="'primary'"
+            :disabled="!allFilled"
             :size="'md'"
             type="submit"
             name="requestDemo"
-            @click="''"
+            @click="createPatientData"
           >
             <span class="ml-0">Create</span></Button
           >
@@ -86,10 +94,11 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 import Modal from '@/components/ui/Modal'
 import TextInput from '@/components/ui/Inputs/TextInput'
 import Button from '@/components/ui/Button'
+import { mapGetters } from 'vuex'
 export default defineComponent({
   name: 'CreateModal',
   props: {
@@ -98,10 +107,56 @@ export default defineComponent({
       required: true,
     },
   },
+  data() {
+    return {
+      roles: [],
+      loading: false,
+      createPatientData: {
+        name: '',
+        email: '',
+        phoneNumber: '',
+        password: '',
+        roles: [],
+      },
+    }
+  },
+  mounted() {
+    this.$store.dispatch('handleGetAllRoles')
+  },
+  methods: {
+    createOfficer() {
+      this.loading = true
+      this.$store
+        .dispatch('handleCreatePatient', this.createPatientData)
+        .then(() => {
+          this.loading = false
+        })
+        .catch(() => {
+          this.loading = false
+        })
+    },
+  },
+  computed: {
+    ...mapGetters(['getRolesData', 'getRolesLoading']),
+    allFilled() {
+      const { name, email, phoneNumber, password, roles } =
+        this.createPatientData
+      return (
+        name !== '' &&
+        email !== '' &&
+        phoneNumber !== '' &&
+        password !== '' &&
+        roles.length
+      )
+    },
+  },
   components: { Modal, TextInput, Button },
-  setup() {
-    const loading = ref(false)
-    return { loading }
+  watch: {
+    getRolesData: {
+      handler(value) {
+        this.roles = value
+      },
+    },
   },
 })
 </script>

@@ -19,24 +19,16 @@
               v-model="name"
             />
           </div>
-          <div>
-            <label for="name" class="mb-2">Phone Number</label>
-            <TextInput
-              id="name"
-              type="text"
-              placeholder="'e.g Titans Cup'"
-              v-model="name"
-            />
-          </div>
         </div>
         <div class="w-fit ml-auto">
           <Button
             :loading="loading"
             :variant="'primary'"
+            :disabled="!allFilled"
             :size="'md'"
             type="submit"
             name="requestDemo"
-            @click="''"
+            @click="createRole"
           >
             <span class="ml-0">Create</span></Button
           >
@@ -46,7 +38,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 import Modal from '@/components/ui/Modal'
 import TextInput from '@/components/ui/Inputs/TextInput'
 import Button from '@/components/ui/Button'
@@ -59,9 +51,29 @@ export default defineComponent({
     },
   },
   components: { Modal, TextInput, Button },
-  setup() {
-    const loading = ref(false)
-    return { loading }
+  data() {
+    return {
+      roleName: '',
+      loading: false,
+    }
+  },
+  methods: {
+    createRole() {
+      this.loading = true
+      this.$store
+        .dispatch('handleCreateRole', { name: this.roleName })
+        .then(() => {
+          this.loading = false
+        })
+        .catch(() => {
+          this.loading = false
+        })
+    },
+  },
+  computed: {
+    allFilled() {
+      return this.roleName !== ''
+    },
   },
 })
 </script>

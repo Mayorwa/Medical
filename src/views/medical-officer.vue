@@ -24,8 +24,8 @@
             <div class="prices__cell">name</div>
             <div class="prices__cell">email</div>
             <div class="prices__cell">type</div>
-            <div class="prices__cell">roles</div>
-            <div class="prices__cell">actions</div>
+            <div class="prices__cell">date created</div>
+            <!--            <div class="prices__cell">actions</div>-->
           </div>
           <template v-if="medicalOfficers.length">
             <div
@@ -38,19 +38,28 @@
               </div>
               <div class="prices__cell">{{ officer.name }}</div>
               <div class="prices__cell">{{ officer.email }}</div>
-              <div class="prices__cell prices__description">
-                <p>{{ officer.type }}</p>
+              <div class="prices__cell">
+                {{ officer.userType }}
               </div>
               <div class="prices__cell">
                 {{
-                  moment(String(officer.created_at)).format(
+                  moment(String(officer.dateCreated)).format(
                     'MMMM Do YYYY, h:mm:ss a'
                   )
                 }}
               </div>
-              <div class="prices__cell prices__btns">
-                <a class="button button--blue-white">view details</a>
-              </div>
+              <!--              <div class="prices__cell prices__btns">
+                <Button
+                  :loading="false"
+                  :variant="'primary'"
+                  :size="'md'"
+                  type="submit"
+                  name="requestDemo"
+                  @click="''"
+                >
+                  <span class="ml-0">View Details</span></Button
+                >
+              </div>-->
             </div>
           </template>
           <template v-else>
@@ -96,7 +105,7 @@ export default {
   watch: {
     getMedicalOfficersData: {
       handler(value) {
-        this.medicalOfficers = value.pagedList
+        this.medicalOfficers = value
       },
     },
   },

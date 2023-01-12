@@ -2,7 +2,7 @@ import http from '../../config/axios'
 
 export const roleUrls = {
   CREATE_URL: 'Roles/create',
-  GET_ALL_URL: 'Roles/get-all',
+  GET_ALL_URL: 'Roles/list-all',
 }
 
 const createRole = async params => {
