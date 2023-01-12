@@ -4,18 +4,18 @@
       <div class="login__col login-side">
         <img
           src="@/assets/img/ava-header.png"
-          class="login-side__logo"
+          class="login-side__logo mx-auto"
           alt=""
         />
       </div>
       <div class="login__col login__signin-img"></div>
       <div class="login__col login-form">
         <div class="login__form-div">
-          <div class="login__form">
+          <div class="login__form w-3/5">
             <a class="login__logo"
               ><img src="@/assets/img/ava-header.png" alt=""
             /></a>
-            <div class="login__stage h5">Sign in to your account</div>
+            <h2 class="login__stage">Sign in to your account</h2>
             <p class="login__form-desc">input your details</p>
             <div class="login__field">
               <div class="field__label">email address</div>
