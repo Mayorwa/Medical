@@ -75,6 +75,13 @@
         </div>
       </template>
     </Modal>
+    <Notification
+      :showIcon="ShowIcon"
+      :show="showNotification"
+      :message="NotificationMessage"
+      :type="NotificationType"
+      v-on:close-notification="!showNotification"
+    />
   </div>
 </template>
 <script>
@@ -82,6 +89,7 @@ import { defineComponent } from 'vue'
 import Modal from '@/components/ui/Modal'
 import TextInput from '@/components/ui/Inputs/TextInput'
 import Button from '@/components/ui/Button'
+import Notification from '@/components/ui/Notification'
 export default defineComponent({
   name: 'RecordsModal',
   props: {
@@ -100,6 +108,10 @@ export default defineComponent({
         nextAppointment: '',
         remark: '',
       },
+      ShowIcon: true,
+      showNotification: false,
+      NotificationMessage: '',
+      NotificationType: null,
     }
   },
   methods: {
@@ -109,9 +121,21 @@ export default defineComponent({
         .dispatch('handleCreateRecord', this.createRecordData)
         .then(() => {
           this.loading = false
+          return this.activateNotification(
+            'success',
+            'Records created successfully',
+            true,
+            true
+          )
         })
         .catch(() => {
           this.loading = false
+          return this.activateNotification(
+            'error',
+            'an error occurred',
+            true,
+            true
+          )
         })
     },
   },
@@ -128,7 +152,7 @@ export default defineComponent({
       )
     },
   },
-  components: { Modal, TextInput, Button },
+  components: { Modal, TextInput, Button, Notification },
 })
 </script>
 <style lang="scss" scoped>

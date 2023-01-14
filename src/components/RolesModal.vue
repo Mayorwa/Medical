@@ -35,6 +35,13 @@
         </div>
       </template>
     </Modal>
+    <Notification
+      :showIcon="ShowIcon"
+      :show="showNotification"
+      :message="NotificationMessage"
+      :type="NotificationType"
+      v-on:close-notification="!showNotification"
+    />
   </div>
 </template>
 <script>
@@ -42,6 +49,7 @@ import { defineComponent } from 'vue'
 import Modal from '@/components/ui/Modal'
 import TextInput from '@/components/ui/Inputs/TextInput'
 import Button from '@/components/ui/Button'
+import Notification from '@/components/ui/Notification'
 export default defineComponent({
   name: 'CreateModal',
   props: {
@@ -50,23 +58,58 @@ export default defineComponent({
       required: true,
     },
   },
-  components: { Modal, TextInput, Button },
+  components: { Modal, TextInput, Button, Notification },
   data() {
     return {
       roleName: '',
       loading: false,
+      ShowIcon: true,
+      showNotification: false,
+      NotificationMessage: '',
+      NotificationType: null,
     }
   },
   methods: {
+    removeNotificationAfterFewSeconds() {
+      setTimeout(() => {
+        this.showNotification = false
+        this.NotificationMessage = ''
+        this.NotificationType = null
+      }, 3500)
+    },
+    activateNotification(
+      notificationType,
+      notificationMessage,
+      showNotification,
+      showIcon
+    ) {
+      this.NotificationType = notificationType
+      this.NotificationMessage = notificationMessage
+      this.showNotification = showNotification
+      this.ShowIcon = showIcon
+      this.removeNotificationAfterFewSeconds()
+    },
     createRole() {
       this.loading = true
       this.$store
         .dispatch('handleCreateRole', { name: this.roleName })
         .then(() => {
           this.loading = false
+          return this.activateNotification(
+            'success',
+            'Role created successfully',
+            true,
+            true
+          )
         })
         .catch(() => {
           this.loading = false
+          return this.activateNotification(
+            'error',
+            'an error occurred',
+            true,
+            true
+          )
         })
     },
   },

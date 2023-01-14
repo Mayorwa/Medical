@@ -91,6 +91,13 @@
         </div>
       </template>
     </Modal>
+    <Notification
+      :showIcon="ShowIcon"
+      :show="showNotification"
+      :message="NotificationMessage"
+      :type="NotificationType"
+      v-on:close-notification="!showNotification"
+    />
   </div>
 </template>
 <script>
@@ -99,6 +106,7 @@ import Modal from '@/components/ui/Modal'
 import TextInput from '@/components/ui/Inputs/TextInput'
 import Button from '@/components/ui/Button'
 import { mapGetters } from 'vuex'
+import Notification from '@/components/ui/Notification'
 export default defineComponent({
   name: 'CreateModal',
   props: {
@@ -118,21 +126,56 @@ export default defineComponent({
         password: '',
         roles: [],
       },
+      ShowIcon: true,
+      showNotification: false,
+      NotificationMessage: '',
+      NotificationType: null,
     }
   },
   mounted() {
     this.$store.dispatch('handleGetAllRoles')
   },
   methods: {
+    removeNotificationAfterFewSeconds() {
+      setTimeout(() => {
+        this.showNotification = false
+        this.NotificationMessage = ''
+        this.NotificationType = null
+      }, 3500)
+    },
+    activateNotification(
+      notificationType,
+      notificationMessage,
+      showNotification,
+      showIcon
+    ) {
+      this.NotificationType = notificationType
+      this.NotificationMessage = notificationMessage
+      this.showNotification = showNotification
+      this.ShowIcon = showIcon
+      this.removeNotificationAfterFewSeconds()
+    },
     createPatient() {
       this.loading = true
       this.$store
         .dispatch('handleCreatePatient', this.createPatientData)
         .then(() => {
           this.loading = false
+          return this.activateNotification(
+            'success',
+            'Patients created successfully',
+            true,
+            true
+          )
         })
         .catch(() => {
           this.loading = false
+          return this.activateNotification(
+            'error',
+            'an error occurred',
+            true,
+            true
+          )
         })
     },
   },
@@ -150,7 +193,7 @@ export default defineComponent({
       )
     },
   },
-  components: { Modal, TextInput, Button },
+  components: { Modal, TextInput, Button, Notification },
   watch: {
     getRolesData: {
       handler(value) {

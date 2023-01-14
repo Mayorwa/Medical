@@ -91,17 +91,25 @@
         </div>
       </template>
     </Modal>
+    <Notification
+      :showIcon="ShowIcon"
+      :show="showNotification"
+      :message="NotificationMessage"
+      :type="NotificationType"
+      v-on:close-notification="!showNotification"
+    />
   </div>
 </template>
 <script>
 import { defineComponent } from 'vue'
 import Modal from '@/components/ui/Modal'
 import TextInput from '@/components/ui/Inputs/TextInput'
-
+import Notification from '@/components/ui/Notification'
 import Button from '@/components/ui/Button'
 import { mapGetters } from 'vuex'
 export default defineComponent({
   name: 'MedicalOfficersModal',
+  components: { Modal, TextInput, Button, Notification },
   props: {
     showModal: {
       type: Boolean,
@@ -154,9 +162,21 @@ export default defineComponent({
         .dispatch('handleCreateMedicalOfficer', this.createMedicalOfficer)
         .then(() => {
           this.loading = false
+          return this.activateNotification(
+            'success',
+            'Medical Officer created successfully',
+            true,
+            true
+          )
         })
         .catch(() => {
           this.loading = false
+          return this.activateNotification(
+            'error',
+            'an error occurred',
+            true,
+            true
+          )
         })
     },
   },
@@ -174,7 +194,6 @@ export default defineComponent({
       )
     },
   },
-  components: { Modal, TextInput, Button },
   watch: {
     getRolesData: {
       handler(value) {
