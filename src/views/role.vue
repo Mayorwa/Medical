@@ -22,12 +22,25 @@
           <div class="prices__row prices__row_head">
             <div class="prices__cell">#</div>
             <div class="prices__cell">name</div>
+            <div class="prices__cell">action</div>
           </div>
           <div v-for="(role, index) in roles" class="prices__row" :key="index">
             <div class="prices__cell">
               <a class="primary">{{ index + 1 }}</a>
             </div>
             <div class="prices__cell">{{ role.name }}</div>
+            <div class="prices__cell">
+              <Button
+                :loading="loading"
+                :variant="'primary'"
+                :size="'md'"
+                type="submit"
+                name="requestDemo"
+                @click="triggerModal(true)"
+              >
+                <span class="ml-0">change role</span></Button
+              >
+            </div>
           </div>
         </div>
       </div>

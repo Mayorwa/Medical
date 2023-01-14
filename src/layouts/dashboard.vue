@@ -18,5 +18,8 @@ export default {
     Header,
     Sidebar,
   },
+  mounted() {
+    this.$store.dispatch('handleGetLoggedInUser')
+  },
 }
 </script>

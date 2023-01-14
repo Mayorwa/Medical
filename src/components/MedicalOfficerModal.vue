@@ -118,11 +118,11 @@ export default defineComponent({
         phoneNumber: '',
         password: '',
         roles: [],
-        ShowIcon: true,
-        showNotification: false,
-        NotificationMessage: '',
-        NotificationType: null,
       },
+      ShowIcon: true,
+      showNotification: false,
+      NotificationMessage: '',
+      NotificationType: null,
     }
   },
   mounted() {

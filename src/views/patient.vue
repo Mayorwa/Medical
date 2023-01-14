@@ -4,16 +4,18 @@
     <div class="prices">
       <div class="prices__head">
         <h4 class="prices__title">Patients</h4>
-        <Button
-          :loading="loading"
-          :variant="'primary'"
-          :size="'md'"
-          type="submit"
-          name="requestDemo"
-          @click="triggerModal(true)"
-        >
-          <span class="ml-0">Create</span></Button
-        >
+        <div v-if="isAllowed">
+          <Button
+            :loading="loading"
+            :variant="'primary'"
+            :size="'md'"
+            type="submit"
+            name="requestDemo"
+            @click="triggerModal(true)"
+          >
+            <span class="ml-0">Create</span></Button
+          >
+        </div>
       </div>
       <div class="prices_description">records of offices by hallo labs</div>
       <hr class="prices__hr" />
@@ -85,14 +87,27 @@ export default {
       loading: false,
       patients: [],
       showModal: false,
+      isAllowed: false,
     }
   },
   mounted() {
     this.$store.dispatch('handleGetAllPatients')
+    this.checkIfUserIsAllowed()
   },
   methods: {
     triggerModal(value) {
       this.showModal = value
+    },
+    checkIfUserIsAllowed() {
+      let getUserData = this.$store.getters.getUserData
+      let roles = getUserData.roles
+      let needles = ['Role2', 'Admin']
+      needles.forEach(val => {
+        if (roles.includes(val)) {
+          this.isAllowed = true
+          return ''
+        }
+      })
     },
   },
   computed: {

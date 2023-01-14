@@ -14,7 +14,7 @@ export default {
     recordsLoading: false,
     recordsFailure: null,
 
-    userData: [],
+    userData: {},
     userLoading: false,
     userFailure: null,
 

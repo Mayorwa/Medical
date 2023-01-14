@@ -4,16 +4,18 @@
     <div class="prices">
       <div class="prices__head">
         <h4 class="prices__title">Records</h4>
-        <Button
-          :loading="loading"
-          :variant="'primary'"
-          :size="'md'"
-          type="submit"
-          name="requestDemo"
-          @click="triggerModal(true)"
-        >
-          <span class="ml-0">Create</span></Button
-        >
+        <div v-if="isAllowed">
+          <Button
+            :loading="loading"
+            :variant="'primary'"
+            :size="'md'"
+            type="submit"
+            name="requestDemo"
+            @click="triggerModal(true)"
+          >
+            <span class="ml-0">Create</span></Button
+          >
+        </div>
       </div>
       <div class="prices_description">records of records</div>
       <hr class="prices__hr" />
@@ -37,31 +39,31 @@
               :key="index"
             >
               <div class="prices__cell">
-                <a class="primary">{{ order.id }}</a>
+                <a class="primary">{{ record.id }}</a>
               </div>
-              <div class="prices__cell">{{ order.service }}</div>
-              <div class="prices__cell">{{ order.customer_email }}</div>
-              <div class="prices__cell">{{ order.employee_email }}</div>
+              <div class="prices__cell">{{ record.service }}</div>
+              <div class="prices__cell">{{ record.customer_email }}</div>
+              <div class="prices__cell">{{ record.employee_email }}</div>
               <div class="prices__cell">
                 <a
                   class="pill pill--blue"
-                  v-if="order.status === 'installment'"
-                  >{{ order.status }}</a
+                  v-if="record.status === 'installment'"
+                  >{{ record.status }}</a
                 >
-                <a class="pill pill--green" v-else>{{ order.status }}</a>
+                <a class="pill pill--green" v-else>{{ record.status }}</a>
               </div>
               <div class="prices__cell success">
-                ₦ {{ numeral(order.amount).format('0,0.00') }}
+                ₦ {{ numeral(record.amount).format('0,0.00') }}
               </div>
-              <div class="prices__cell" v-if="order.amountPaid === null">
+              <div class="prices__cell" v-if="record.amountPaid === null">
                 null
               </div>
               <div class="prices__cell success" v-else>
-                ₦ {{ numeral(order.amountPaid).format('0,0.00') }}
+                ₦ {{ numeral(record.amountPaid).format('0,0.00') }}
               </div>
               <div class="prices__cell">
                 {{
-                  moment(String(order.created_at)).format(
+                  moment(String(record.created_at)).format(
                     'MMMM Do YYYY, h:mm:ss a'
                   )
                 }}
@@ -98,14 +100,27 @@ export default {
       loading: false,
       records: [],
       showModal: false,
+      isAllowed: false,
     }
   },
   mounted() {
     this.$store.dispatch('handleGetAllRecords')
+    this.checkIfUserIsAllowed()
   },
   methods: {
     triggerModal(value) {
       this.showModal = value
+    },
+    checkIfUserIsAllowed() {
+      let getUserData = this.$store.getters.getUserData
+      let roles = getUserData.roles
+      let needles = ['Role3', 'Role6', 'Admin']
+      needles.forEach(val => {
+        if (roles.includes(val)) {
+          this.isAllowed = true
+          return ''
+        }
+      })
     },
   },
   computed: {

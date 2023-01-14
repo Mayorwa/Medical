@@ -84,7 +84,7 @@
             :size="'md'"
             type="submit"
             name="requestDemo"
-            @click="createPatientData"
+            @click="createPatient"
           >
             <span class="ml-0">Create</span></Button
           >
@@ -124,7 +124,7 @@ export default defineComponent({
     this.$store.dispatch('handleGetAllRoles')
   },
   methods: {
-    createOfficer() {
+    createPatient() {
       this.loading = true
       this.$store
         .dispatch('handleCreatePatient', this.createPatientData)

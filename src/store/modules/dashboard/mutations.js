@@ -42,12 +42,12 @@ export default {
   },
 
   [types.USER_LOADING](state, payload) {
-    state.recordsLoading = payload
+    state.userLoading = payload
   },
   [types.USER_FAILURE](state, payload) {
-    state.recordsFailure = payload
+    state.userFailure = payload
   },
   [types.USER_INFO](state, payload) {
-    state.recordsData = payload
+    state.userData = payload
   },
 }

@@ -57,22 +57,23 @@
         </svg>
       </button>
     </div>
-    <div class="sidebar__body">
+    <div class="sidebar__body" v-if="!getUserLoading && checkIfUserIsAllowed">
       <nav class="sidebar__nav">
-        <router-link
-          :to="item.route"
-          :class="getRouteName === item.route ? 'active' : ''"
-          class="sidebar__item"
-          v-for="(item, index) in sideItems"
-          :key="index"
-        >
-          <div class="sidebar__icon">
-            <svg class="icon" width="30px" height="30px" viewBox="0 0 24 24">
-              <use :xlink:href="`/sprite.svg#icon-${item.icon}`"></use>
-            </svg>
-          </div>
-          <div class="sidebar__text">{{ item.name }}</div>
-        </router-link>
+        <span v-for="(item, index) in sideItems" :key="index">
+          <router-link
+            v-if="item.permitted"
+            :to="item.route"
+            :class="getRouteName === item.route ? 'active' : ''"
+            class="sidebar__item"
+          >
+            <div class="sidebar__icon">
+              <svg class="icon" width="30px" height="30px" viewBox="0 0 24 24">
+                <use :xlink:href="`/sprite.svg#icon-${item.icon}`"></use>
+              </svg>
+            </div>
+            <div class="sidebar__text">{{ item.name }}</div>
+          </router-link>
+        </span>
       </nav>
     </div>
     <div class="sidebar__bottom">
@@ -115,27 +116,70 @@ export default {
     return {
       routeName: '',
       sideItems: [
-        { name: 'Overview', icon: 'overview', route: 'overview' },
+        {
+          name: 'Overview',
+          icon: 'overview',
+          route: 'overview',
+          permitted: true,
+        },
         {
           name: 'Medical Officers',
           icon: 'medical-officer',
           route: 'medical-officer',
+          permitted: false,
         },
-        { name: 'Patients', icon: 'medical-officer', route: 'patients' },
-        { name: 'Records', icon: 'record', route: 'records' },
-        { name: 'Roles', icon: 'role', route: 'role' },
+        {
+          name: 'Patients',
+          icon: 'medical-officer',
+          route: 'patients',
+          permitted: true,
+        },
+        { name: 'Records', icon: 'record', route: 'records', permitted: false },
+        { name: 'Roles', icon: 'role', route: 'role', permitted: false },
       ],
+      isAllowed: false,
     }
   },
   computed: {
     getRouteName() {
       return this.$route.name
     },
-    ...mapGetters({ user: 'getUserData' }),
+    checkIfUserIsAllowed() {
+      if (!this.getUserLoading) {
+        let roles = this.user.roles
+
+        let needles = ['Role2', 'Role3', 'Admin']
+        needles.forEach(val => {
+          if (roles.includes(val)) {
+            this.sideItems[1].permitted = true
+            return ''
+          }
+        })
+
+        let needles2 = ['Role4', 'Role7', 'Admin']
+        needles2.forEach(val => {
+          if (roles.includes(val)) {
+            this.sideItems[3].permitted = true
+            return ''
+          }
+        })
+
+        let needles3 = ['Admin']
+        needles3.forEach(val => {
+          if (roles.includes(val)) {
+            this.sideItems[4].permitted = true
+            return ''
+          }
+        })
+        return true
+      }
+      return false
+    },
+    ...mapGetters({ user: 'getUserData', getUserLoading: 'getUserLoading' }),
   },
 
   mounted() {
-    this.$store.dispatch('handleGetLoggedInUser')
+    this.isAllowed = this.checkIfUserIsAllowed
     let toggle = $('.sidebar__toggle'),
       page = $('.page'),
       sidebar = $('.sidebar'),
