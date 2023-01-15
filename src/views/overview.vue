@@ -1,6 +1,5 @@
 <template>
-  <Loader v-if="getUserLoading && !checkIfUserIsAllowed" />
-  <div v-else class="page__container">
+  <div v-if="!getUserLoading && checkIfUserIsAllowed" class="page__container">
     <div class="prices">
       <div class="prices__head">
         <h4 class="prices__title">Overview</h4>
@@ -60,6 +59,7 @@
       </div>
     </div>
   </div>
+  <Loader v-else />
 </template>
 <script>
 import Loader from '@/components/ui/Loaders/Loader'
@@ -75,7 +75,7 @@ export default {
         {
           name: 'Medical Officer',
           icon: 'medical-officer',
-          route: '/medical-officers',
+          route: '/medical-officer',
           permitted: false,
         },
         {
@@ -93,7 +93,7 @@ export default {
         {
           name: 'Role',
           icon: 'role',
-          route: '/roles',
+          route: '/role',
           permitted: false,
         },
       ],

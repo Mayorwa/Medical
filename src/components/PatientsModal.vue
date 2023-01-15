@@ -177,6 +177,7 @@ export default defineComponent({
             true
           )
         })
+      this.$emit('triggerModal', false)
     },
   },
   computed: {
