@@ -20,13 +20,21 @@
             />
           </div>
           <div>
-            <label for="name" class="mb-2">Patient Id</label>
-            <TextInput
-              id="name"
-              type="text"
-              placeholder="'e.g 1000-2233-2332'"
+            <label for="name" class="mb-2">Patients</label>
+            <select
+              class="field__input"
+              name=""
+              id=""
               v-model="createRecordData.patientId"
-            />
+            >
+              <option
+                v-for="(patient, index) in patients"
+                :key="index"
+                :value="patient.id"
+              >
+                {{ patient.name }}
+              </option>
+            </select>
           </div>
         </div>
         <div class="sm:grid sm:grid-cols-2 gap-4 mb-4">
@@ -48,7 +56,7 @@
             <textarea
               name=""
               id=""
-              class="field__input field__textarea"
+              class="field__textarea"
               cols="30"
               rows="10"
               v-model="createRecordData.description"
@@ -61,7 +69,7 @@
             <textarea
               name=""
               id=""
-              class="field__input field__textarea"
+              class="field__textarea"
               cols="30"
               rows="10"
               v-model="createRecordData.remark"
@@ -98,6 +106,7 @@ import Modal from '@/components/ui/Modal'
 import TextInput from '@/components/ui/Inputs/TextInput'
 import Button from '@/components/ui/Button'
 import Notification from '@/components/ui/Notification'
+import { mapGetters } from 'vuex'
 
 const moment = require('moment')
 export default defineComponent({
@@ -115,15 +124,18 @@ export default defineComponent({
         name: '',
         description: '',
         patientId: '',
-        medicalOfficerId: '',
         nextAppointment: '',
         remark: '',
       },
+      patients: [],
       ShowIcon: true,
       showNotification: false,
       NotificationMessage: '',
       NotificationType: null,
     }
+  },
+  mounted() {
+    this.$store.dispatch('handleGetAllPatients')
   },
   methods: {
     createRecord() {
@@ -176,6 +188,7 @@ export default defineComponent({
     },
   },
   computed: {
+    ...mapGetters(['getPatientsData']),
     allFilled() {
       const { name, description, patientId, nextAppointment, remark } =
         this.createRecordData
@@ -189,6 +202,13 @@ export default defineComponent({
     },
   },
   components: { Modal, TextInput, Button, Notification },
+  watch: {
+    getPatientsData: {
+      handler(value) {
+        this.patients = value
+      },
+    },
+  },
 })
 </script>
 <style lang="scss" scoped>
