@@ -136,12 +136,13 @@ export default defineComponent({
         .dispatch('handleCreateRecord', this.createRecordData)
         .then(() => {
           this.loading = false
-          return this.activateNotification(
+          this.activateNotification(
             'success',
             'Records created successfully',
             true,
             true
           )
+          this.$store.dispatch('handleGetAllRecords')
         })
         .catch(() => {
           this.loading = false

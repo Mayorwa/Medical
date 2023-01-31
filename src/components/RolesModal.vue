@@ -95,12 +95,13 @@ export default defineComponent({
         .dispatch('handleCreateRole', { name: this.roleName })
         .then(() => {
           this.loading = false
-          return this.activateNotification(
+          this.activateNotification(
             'success',
             'Role created successfully',
             true,
             true
           )
+          this.$store.dispatch('handleGetAllRoles')
         })
         .catch(() => {
           this.loading = false

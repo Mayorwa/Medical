@@ -105,6 +105,7 @@ export default {
   watch: {
     getRecordsData: {
       handler(value) {
+        console.log(value)
         this.records = value
       },
     },

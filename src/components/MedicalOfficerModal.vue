@@ -162,12 +162,13 @@ export default defineComponent({
         .dispatch('handleCreateMedicalOfficer', this.createMedicalOfficer)
         .then(() => {
           this.loading = false
-          return this.activateNotification(
+          this.activateNotification(
             'success',
             'Medical Officer created successfully',
             true,
             true
           )
+          this.$store.dispatch('handleGetAllMedicalOfficers')
         })
         .catch(() => {
           this.loading = false

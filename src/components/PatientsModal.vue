@@ -161,12 +161,13 @@ export default defineComponent({
         .dispatch('handleCreatePatient', this.createPatientData)
         .then(() => {
           this.loading = false
-          return this.activateNotification(
+          this.activateNotification(
             'success',
             'Patients created successfully',
             true,
             true
           )
+          this.$store.dispatch('handleGetAllPatients')
         })
         .catch(() => {
           this.loading = false
