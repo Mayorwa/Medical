@@ -11,7 +11,7 @@
       <template #body>
         <div class="sm:grid sm:grid-cols-2 gap-4 mb-4">
           <div>
-            <label for="name" class="mb-2">Name</label>
+            <label for="name" class="mb-2">Record Name</label>
             <TextInput
               id="name"
               type="text"
@@ -39,25 +39,33 @@
               v-model="createRecordData.nextAppointment"
             />
           </div>
+        </div>
+        <div class="sm:grid mb-4">
           <div>
-            <label for="name" class="mb-2">Password</label>
-            <TextInput
-              id="name"
-              type="password"
-              placeholder="'e.g *******'"
-              v-model="createRecordData.password"
-            />
+            <label for="name" class="mb-2"
+              >Description on Patient Condition</label
+            >
+            <textarea
+              name=""
+              id=""
+              class="field__input field__textarea"
+              cols="30"
+              rows="10"
+              v-model="createRecordData.description"
+            ></textarea>
           </div>
         </div>
-        <div class="sm:grid sm:grid-cols-2 gap-4 mb-4">
+        <div class="sm:grid mb-4">
           <div>
             <label for="name" class="mb-2">Remark</label>
-            <TextInput
-              id="name"
-              type="text"
-              placeholder="'e.g Titans Cup'"
+            <textarea
+              name=""
+              id=""
+              class="field__input field__textarea"
+              cols="30"
+              rows="10"
               v-model="createRecordData.remark"
-            />
+            ></textarea>
           </div>
         </div>
         <div class="w-fit ml-auto">
@@ -90,6 +98,8 @@ import Modal from '@/components/ui/Modal'
 import TextInput from '@/components/ui/Inputs/TextInput'
 import Button from '@/components/ui/Button'
 import Notification from '@/components/ui/Notification'
+
+const moment = require('moment')
 export default defineComponent({
   name: 'RecordsModal',
   props: {
@@ -105,6 +115,7 @@ export default defineComponent({
         name: '',
         description: '',
         patientId: '',
+        medicalOfficerId: '',
         nextAppointment: '',
         remark: '',
       },
@@ -117,6 +128,10 @@ export default defineComponent({
   methods: {
     createRecord() {
       this.loading = true
+      this.createRecordData.nextAppointment = moment
+        .parseZone(this.createRecordData.nextAppointment)
+        .utc()
+        .format()
       this.$store
         .dispatch('handleCreateRecord', this.createRecordData)
         .then(() => {
@@ -138,6 +153,25 @@ export default defineComponent({
           )
         })
       this.$emit('triggerModal', false)
+    },
+    removeNotificationAfterFewSeconds() {
+      setTimeout(() => {
+        this.showNotification = false
+        this.NotificationMessage = ''
+        this.NotificationType = null
+      }, 3500)
+    },
+    activateNotification(
+      notificationType,
+      notificationMessage,
+      showNotification,
+      showIcon
+    ) {
+      this.NotificationType = notificationType
+      this.NotificationMessage = notificationMessage
+      this.showNotification = showNotification
+      this.ShowIcon = showIcon
+      this.removeNotificationAfterFewSeconds()
     },
   },
   computed: {

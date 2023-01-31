@@ -2,7 +2,6 @@ import { Authorization } from '../../utils/authorization'
 import store from '../store'
 
 export default (to, from, next) => {
-  console.log('hjdd')
   if (Authorization.check.isAuthenticated()) {
     if (!store.getters.getUserLoading) {
       store.dispatch('handleGetLoggedInUser')

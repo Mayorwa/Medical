@@ -1,5 +1,11 @@
 <template>
   <div class="sidebar">
+    <router-link :to="'/login'">
+      Logout
+      <svg class="icon" width="30px" height="30px" viewBox="0 0 24 24">
+        <use xlink:href="/sprite.svg#icon-"></use>
+      </svg>
+    </router-link>
     <div class="sidebar__head">
       <a class="sidebar__logo">
         <img
@@ -78,7 +84,7 @@
     </div>
     <div class="sidebar__bottom">
       <a
-        class="sidebar__item"
+        class="sidebar__item p-0"
         href="https://github.com/Mayorwa"
         target="_blank"
       >
@@ -101,7 +107,9 @@
             </g>
           </svg>
         </div>
-        <div class="sidebar__text">{{ user.name }}({{ user.userType }})</div>
+        <div class="sidebar__text text-wrap">
+          {{ user.name }}({{ user.userType }})
+        </div>
       </a>
     </div>
   </div>

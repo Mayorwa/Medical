@@ -23,14 +23,10 @@
         <div class="prices__table">
           <div class="prices__row prices__row_head">
             <div class="prices__cell">#</div>
-            <div class="prices__cell">service</div>
-            <div class="prices__cell">customer email</div>
-            <div class="prices__cell">employee email</div>
-            <div class="prices__cell">payment status</div>
-            <div class="prices__cell">amount</div>
-            <div class="prices__cell">amount paid so far</div>
-            <div class="prices__cell">date purchased</div>
-            <div class="prices__cell">actions</div>
+            <div class="prices__cell">Patient Name</div>
+            <div class="prices__cell">Medical Officer</div>
+            <div class="prices__cell">Description</div>
+            <div class="prices__cell">Next Appointment</div>
           </div>
           <template v-if="records.length">
             <div
@@ -39,37 +35,17 @@
               :key="index"
             >
               <div class="prices__cell">
-                <a class="primary">{{ record.id }}</a>
+                <a class="primary">{{ index + 1 }}</a>
               </div>
-              <div class="prices__cell">{{ record.service }}</div>
-              <div class="prices__cell">{{ record.customer_email }}</div>
-              <div class="prices__cell">{{ record.employee_email }}</div>
-              <div class="prices__cell">
-                <a
-                  class="pill pill--blue"
-                  v-if="record.status === 'installment'"
-                  >{{ record.status }}</a
-                >
-                <a class="pill pill--green" v-else>{{ record.status }}</a>
-              </div>
-              <div class="prices__cell success">
-                ₦ {{ numeral(record.amount).format('0,0.00') }}
-              </div>
-              <div class="prices__cell" v-if="record.amountPaid === null">
-                null
-              </div>
-              <div class="prices__cell success" v-else>
-                ₦ {{ numeral(record.amountPaid).format('0,0.00') }}
-              </div>
+              <div class="prices__cell">{{ record.patient.name }}</div>
+              <div class="prices__cell">{{ record.medicalOfficer.name }}</div>
+              <div class="prices__cell">{{ record.description }}</div>
               <div class="prices__cell">
                 {{
-                  moment(String(record.created_at)).format(
+                  moment(String(record.nextAppointment)).format(
                     'MMMM Do YYYY, h:mm:ss a'
                   )
                 }}
-              </div>
-              <div class="prices__cell prices__btns">
-                <a class="button button--blue-white">view details</a>
               </div>
             </div>
           </template>

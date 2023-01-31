@@ -170,11 +170,12 @@
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
+        flex-wrap: wrap;
         -webkit-box-align: center;
         -ms-flex-align: center;
         align-items: center;
-        height: 72px;
-        padding: 0 20px;
+        height: 102px;
+        padding: 0 5px;
         -webkit-transition: padding .2s;
         -o-transition: padding .2s;
         transition: padding .2s;
